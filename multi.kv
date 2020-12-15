@@ -1,0 +1,514 @@
+<MainScreen>:
+    SelectApp:
+    CroppingApp:
+    RotationApp:
+    GaussBlurApp:
+    PixelsCountApp:
+    ThresholdApp:
+    DivideApp:
+   
+  
+
+
+<SelectApp>:
+    name: 'select'
+    BoxLayout:
+        
+        # canvas:
+        #     Color:
+        #         rgba: 0, 0, 0, 0.5
+        #     Rectangle:
+        #         size: self.size
+        #         pos: self.pos
+        orientation: 'vertical'
+        size_hint: None, None
+        size: 300, 300
+        center: self.parent.center
+        
+        Button:
+            text: 'Go to Cropping'
+            on_release:
+                app.root.current = 'cropping'
+                root.manager.transition.direction = 'left'
+        
+        Button:
+            text: 'Go to Rotation'
+            on_release:
+                app.root.current = 'rotation'
+                root.manager.transition.direction = 'left'
+
+
+        Button:
+            text: 'Go to Camera Gauss-Blur'
+            on_release:
+                app.root.current = 'gaussblur'
+                root.manager.transition.direction = 'left'
+
+        Button:
+            text: 'Go to Threshold'
+            on_release:
+                app.root.current = 'threshold'
+                root.manager.transition.direction = 'left'
+
+        Button:
+            text: 'Go to Pixels Count'
+            on_release:
+                app.root.current = 'pixelscount'
+                root.manager.transition.direction = 'left'
+
+        Button:
+            text: 'Go to Microscope Gauss-Blur'
+            on_release:
+                app.root.current = 'divide'
+                root.manager.transition.direction = 'left'
+
+<CroppingApp>:
+    name: 'cropping'
+
+    BoxLayout:
+        orientation: 'vertical'
+        # size_hint_y: None
+        # height:210
+        pos_hint: {'center_x':0.5, "top":1}
+
+        Button:
+            text: 'Load Files'
+            on_release: root.show_load()
+            size_hint_y: None
+            height:30
+        GridLayout:
+            cols:2
+            row_force_default:True
+            row_default_height:30
+            size_hint_y: None
+            height:150
+
+            Label:
+                text: 'Left'
+            TextInput:
+                id: left_in
+                multiline:False
+                hint_text: 'Enter pixcels'
+
+            Label:
+                text: 'Top'
+            TextInput:
+                id: top_in
+                multiline:False
+                hint_text: 'Enter pixcels'
+
+            Label:
+                text: 'Right'
+            TextInput:
+                id: right_in
+                multiline:False
+                hint_text: 'Enter pixcels'
+            Label:
+                text: 'Bottom'
+            TextInput:
+                id: bottom_in
+                multiline:False
+                hint_text: 'Enter pixcels'
+
+            Button:
+                text: 'Test Cropping'
+                on_release: root.test_cropping()
+
+            Button:
+                text: 'Apply All'
+                on_release: root.cropping_all()
+
+        Button:
+            id: crp_all_files_btn
+            text: 'Load all files in folder'
+            on_release: root.load_all_files()
+            size_hint_y: None
+            height: 30
+
+        Button:
+            text: 'Back to main screen'
+            on_release:
+                app.root.current = 'select'
+                root.manager.transition.direction = 'right'
+            size_hint_y: None
+            height:30
+
+        Label:
+            id: lb_size
+            text: "Initial Size = "
+            size_hint_y: None
+            height:30
+
+        Image:
+            id: cropped
+            source: ''
+
+
+<RotationApp>:
+    name: 'rotation'
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint_y:None
+        height:150
+        pos_hint: {'center_x':0.5, 'top':1}
+
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: 'Load Files'
+                on_release: root.show_load()
+        GridLayout:
+            cols:2
+            row_force_default:True
+            row_default_height:30
+
+            Label:
+                text: 'Angle Rotation'
+            TextInput:
+                id: angle_in
+                multiline:False
+                hint_text: 'Enter angle'
+
+            Button:
+                text: 'Test Rotation'
+                on_release: root.test_rotation()
+
+            Button:
+                text: 'Apply All'
+                on_release: root.rotation_all()
+
+        Button:
+            id: rot_all_files_btn
+            text: 'Load all files in folder'
+            on_release: root.load_all_files()
+            size_hint_y: None
+            height: 30
+
+        Button:
+            size_hint_y: None
+            height: 30
+            text: 'Back to main screen'
+            on_release:
+                app.root.current = 'select'
+                root.manager.transition.direction = 'right'
+
+<GaussBlurApp>:
+    name: 'gaussblur'
+
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint_y: None
+        height: 245
+        pos_hint: {"top":1}
+
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: 'Load Files'
+                on_release: root.show_load()
+        GridLayout:
+
+            cols:3
+            row_force_default:True
+            row_default_height:30
+            size_hint_y: None
+            height:121
+
+            Label:
+                text: 'Contrast and Brightness '
+            TextInput:
+                id: contrast_in
+                multiline:False
+                hint_text: 'Contrast value (2 recommended)'
+            TextInput:
+                id: brightness_in
+                multiline: False
+                hint_text: 'Brightness value (1.2 recommended)'
+
+            Label:
+                text: 'Gaussian Blur'
+            TextInput:
+                id: gauss_in
+                multiline: False
+                hint_text: 'Enter Gaussian coefficient (9 recommended)'
+            TextInput:
+                id: blur_in
+                multiline: False
+                hint_text: 'Enter Blur coefficient (9 recommended)'
+
+            Label:
+                text: 'Contrast and Brightness'
+            TextInput:
+                id: contrast2_in
+                multiline:False
+                hint_text: 'Contrast value (2 recommended)'
+            TextInput:
+                id: brightness2_in
+                multiline: False
+                hint_text: 'Brightness value (0.5 recommended)'
+
+            Label:
+                text: 'Gaussian Blur'
+            TextInput:
+                id: gauss2_in
+                multiline: False
+                hint_text: 'Enter Gaussian coefficient (5 recommended)'
+            TextInput:
+                id: blur2_in
+                multiline: False
+                hint_text: 'Enter Blur coefficient (5 recommended)'
+
+        BoxLayout:
+            size_hint_y: None
+            height: 31
+
+            Button:
+                text: 'Test Filters'
+                on_release: root.test_filters()
+                size_hint_y: None
+                height: 30
+
+            Button:
+                text: 'Apply All'
+                on_release: root.filters_all()
+                size_hint_y: None
+                height: 30
+
+        Button:
+            id: gb_all_files_btn
+            text: 'Load all files in folder'
+            on_release: root.load_all_files()
+            size_hint_y: None
+            height: 30
+
+
+        Button:
+            text: 'Back to main screen'
+            on_release:
+                app.root.current = 'select'
+                root.manager.transition.direction = 'right'
+            size_hint_y: None
+            height: 30
+
+<PixelsCountApp>:
+    name: 'pixelscount'
+
+
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint_y: None
+        height: 91
+        pos_hint: {"top":1}
+
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: 'Load Files'
+                on_release: root.show_load()
+
+
+            Button:
+                text: 'Count Pixels'
+                on_release: root.count_all()
+                size_hint_y: None
+                height: 30
+
+        Button:
+            id: count_all_files_btn
+            text: 'Load all files in folder'
+            on_release: root.load_all_files()
+            size_hint_y: None
+            height: 30
+
+
+        Button:
+            text: 'Back to main screen'
+            size_hint_y: None
+            height: 30
+            on_release:
+                app.root.current = 'select'
+                root.manager.transition.direction = 'right'
+
+<ThresholdApp>:
+    name: 'threshold'
+    BoxLayout:
+
+        orientation: 'vertical'
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: 'Load Files'
+                on_release: root.show_load()
+        GridLayout:
+            cols:2
+            row_force_default:True
+            row_default_height:40
+            size_hint_y: None
+            height:120
+
+            Label:
+                id:lb
+                text: 'Threshold = {}'.format(thrsh.value)[:17]
+            Slider:
+                id: thrsh
+                min: 0
+                max: 255
+                step: 0.1
+                value: 127
+                on_value: root.new_threshold(self.value)
+            TextInput:
+                id: text_in
+                multiline: False
+                text: str(thrsh.value)[:5]
+
+            Button:
+                text: "Apply"
+                on_press: thrsh.value = float(text_in.text)
+
+            Button:
+                text: 'Show picture'
+                on_release: root.show_picture(thrsh.value)
+
+            Button:
+                id: bt_next
+                text: 'Next picture'
+                on_release: root.next_picture(thrsh.value)
+
+        Button:
+            id: thrs_all_files_btn
+            text: 'Load all files in folder'
+            on_release: root.load_all_files ()
+            size_hint_y: None
+            height: 30
+
+        Button:
+            text: 'Back to main screen'
+            on_release:
+                app.root.current = 'select'
+                root.manager.transition.direction = 'right'
+            size_hint_y: None
+            height: 30
+
+        Label:
+            id: title
+            text: 'No picture loaded'
+            size_hint_y: None
+            height: 20
+
+        BoxLayout:
+
+            Image:
+                id: original
+                source: ''
+
+            Image:
+                id: threshold
+                source: ''
+
+<DivideApp>:
+    name: 'divide'
+
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint_y: None
+        height: 212
+        pos_hint: {"top":1}
+
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: 'Load Files'
+                on_release: root.show_load()
+        GridLayout:
+
+            cols:2
+            row_force_default:True
+            row_default_height:30
+            size_hint_y: None
+            height:90
+
+            Label:
+                text: 'Contrast'
+            TextInput:
+                id: div_contrast_in
+                multiline:False
+                hint_text: 'Contrast value (2 recommended)'
+            Label:
+                text: 'Gaussian'
+            TextInput:
+                id: div_gauss
+                multiline: False
+                hint_text: 'Enter Gaussian coefficient (5 recommended)'
+            Label:
+                text: 'Blur'
+            TextInput:
+                id: div_blur
+                multiline: False
+                hint_text: 'Enter Blur coefficient (3 recommended)'
+
+        BoxLayout:
+            size_hint_y: None
+            height: 31
+
+            Button:
+                text: 'Test Divide'
+                on_release: root.test_divide()
+                size_hint_y: None
+                height: 30
+
+            Button:
+                text: 'Apply All'
+                on_release: root.divide_all()
+                size_hint_y: None
+                height: 30
+
+        Button:
+            id: div_all_files_btn
+            text: 'Load all files in folder'
+            on_release: root.load_all_files()
+            size_hint_y: None
+            height: 30
+
+
+        Button:
+            text: 'Back to main screen'
+            on_release:
+                app.root.current = 'select'
+                root.manager.transition.direction = 'right'
+            size_hint_y: None
+            height: 30
+
+
+
+<LoadDialog>:
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+        FileChooserIconView:
+            id: filechooser
+            multiselect: True
+            filters:['*.JPG']
+
+
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "Cancel"
+                on_release: root.cancel()
+
+            Button:
+                text: "Load"
+                on_release: root.load(filechooser.path, filechooser.selection)
+
+            
+
+                
+               
+
